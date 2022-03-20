@@ -7,8 +7,12 @@ void main() {
 class myApp extends StatelessWidget {
   const myApp({Key? key}) : super(key: key);
 
+  get valuefirst => false;
+
   @override
   Widget build(BuildContext context) {
+    bool? valuefirst = false;
+    bool valuesecond = false;
     return MaterialApp(
         theme: ThemeData(fontFamily: 'Roboto'),
         home: Scaffold(
@@ -108,6 +112,40 @@ class myApp extends StatelessWidget {
                               ),
                             )),
                       ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 20, left: 115),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            child: Checkbox(
+                              value: this.valuefirst,
+                              checkColor: Colors.greenAccent,
+                              activeColor: Colors.red,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  valuefirst = value;
+                                });
+                              },
+                            ),
+                          ),
+                          const Text(
+                            'Beni Unutma',
+                            style: TextStyle(fontSize: 17.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 20, left: 15),
+                      child: Text(
+                        'ŞİFRENİ Mİ UNUTTUN?',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xff273CB1),
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -118,4 +156,6 @@ class myApp extends StatelessWidget {
   }
 
   customButtonWidget() {}
+
+  void setState(Null Function() param0) {}
 }
