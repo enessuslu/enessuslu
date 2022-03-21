@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const myApp());
+  runApp(MaterialApp(
+    //runApp method
+    home: HomePage(),
+  ));//MaterialApp
 }
 
-class myApp extends StatelessWidget {
-  const myApp({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-  get valuefirst => false;
+class _HomePageState extends State<HomePage> {
+  bool checkboxvalue = false;
+
+  ValueChanged<bool?>? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    bool? valuefirst = false;
-    bool valuesecond = false;
+
     return MaterialApp(
         theme: ThemeData(fontFamily: 'Roboto'),
         home: Scaffold(
@@ -95,44 +102,61 @@ class myApp extends StatelessWidget {
                     ),
                     Row(
                       children: <Widget>[
-                        Container(
-                            margin: EdgeInsets.only(top: 60, left: 120),
-                            width: 150,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Respond to button press
-                              },
-                              child: new Text(
-                                'Giriş',
-                                style: new TextStyle(
-                                  fontSize: 30.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )),
+                      Container(
+                      // customize the height property
+                      height: 50,
+                      // customize the width property
+                      width: 130,
+                      margin: EdgeInsets.only(left: 130,top: 25),
+                      decoration: BoxDecoration(
+                        // spice up the button with a radius
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(14),
+                        ),
+                        border: Border.all(width: 1,color: Color(0xFF878787)),
+
+                        gradient: LinearGradient(
+                          // gradient starts from left
+                            begin: Alignment.centerLeft,
+                            // gradient ends at right
+                            end: Alignment.centerRight,
+                            // set all your colors
+                            colors: [
+                              Color(0xFFE8E8E8),
+                              Color(0xFF2752A8),
+                              Color(0xFF000000),
+
+                            ],
+                        ),
+                      ),
+                    child: Center(
+                        child: Text(
+                          'GİRİŞ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 25,
+                          ),
+                        ),
+                      ),
+
+                    ),
                       ],
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 20, left: 115),
+                      margin: EdgeInsets.only(left: 120,top: 10),
                       child: Row(
-                        children: <Widget>[
-                          Container(
-                            child: Checkbox(
-                              value: this.valuefirst,
-                              checkColor: Colors.greenAccent,
-                              activeColor: Colors.red,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  valuefirst = value;
-                                });
-                              },
-                            ),
+                        children: [
+                          Checkbox(
+                            value: checkboxvalue,
+                            onChanged: (value) {
+                              setState(() {
+                                checkboxvalue = value!;
+                              });
+                            },
+
                           ),
-                          const Text(
-                            'Beni Unutma',
-                            style: TextStyle(fontSize: 17.0),
-                          ),
+                          Text('Beni Unutma',style: TextStyle(color: Color(0xff273CB1)),),
                         ],
                       ),
                     ),
@@ -155,7 +179,8 @@ class myApp extends StatelessWidget {
         ));
   }
 
-  customButtonWidget() {}
 
-  void setState(Null Function() param0) {}
+
+
+
 }
