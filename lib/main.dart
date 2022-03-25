@@ -1,8 +1,10 @@
 
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testflutter/model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -19,34 +21,49 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool checkboxvalue = false;
+
+   bool isChecked=false;
 
   ValueChanged<bool?>? onChanged;
-  final url= Uri.parse("https://efece.apps.dreamfactory.com/api/v2/TEST/_table/users?session_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmMTcyOGViMjFkZDQ4OGQwNGU4ODM3ZTYzMTg2ZDdhZCIsImlzcyI6Imh0dHBzOi8vZWZlY2UuYXBwcy5kcmVhbWZhY3RvcnkuY29tL2FwaS92Mi9zeXN0ZW0vYWRtaW4vc2Vzc2lvbiIsImlhdCI6MTY0Nzk1MjIzOSwiZXhwIjoxNjQ4MDM4NjM5LCJuYmYiOjE2NDc5NTIyMzksImp0aSI6IjRIWTV3WmN4cmxGMTRDNk8iLCJ1c2VyX2lkIjoxLCJmb3JldmVyIjpmYWxzZX0.CoRglU_lxUddPTMrAoKhuB-z4bIjMuoOGEkr9Bi47Kw&api_key=36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88");
+  final url= Uri.parse("http://172.28.64.1:80/user");
+  List<String> usernames=[];
+  List<String> passwords=[];
+  TextEditingController userNameController=new TextEditingController();
+  TextEditingController userPasswordController=new TextEditingController();
   Future callUsers() async{
+
     try{
-       final response= await http.get(url);
-       if(response.statusCode==200){
+      final response= await http.get(url);
+      if(response.statusCode==200){
         var result=usersFromJson(response.body);
-        for(var i=0;i<result.resource.length;i++){
-          print(result.resource[i].name);
+        for(var i=0;i<result.length;i++){
+          usernames.add(result[i].userName.toString());
+          passwords.add(result[i].userPassword.toString());
         }
-
-       }
-       else{
-         print(response.statusCode);
-       }
-
-       print(response.toString());
-
+      }
     }catch(e){
       print(e.toString());
     }
   }
 
+  Future remember() async{
+    final prefs = await SharedPreferences.getInstance();
+        prefs.setString('username', userNameController.text.toString());
+        prefs.setString('password', userPasswordController.text.toString());
+
+  }
+  Future enter() async{
+    final prefs = await SharedPreferences.getInstance();
+    final String? username = prefs.getString('username');
+    final String? userPassword = prefs.getString('password');
+    userNameController.text=username!;
+    userPasswordController.text=userPassword!;
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    callUsers();
+    enter();
     return MaterialApp(
         theme: ThemeData(fontFamily: 'Roboto'),
         home: Scaffold(
@@ -88,6 +105,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                           width: 300,
                           child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: userNameController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
@@ -117,11 +136,19 @@ class _HomePageState extends State<HomePage> {
                           ),
                           width: 300,
                           child: TextField(
+                            textAlign: TextAlign.center,
+                            inputFormatters: [
+                              UpperCaseTextFormatter(),
+                            ],
+                            obscureText: false,
+                            controller: userPasswordController,
                             decoration: InputDecoration(
+
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               hintText: 'Şifre',
+
                             ),
                           ),
                         ),
@@ -174,9 +201,15 @@ class _HomePageState extends State<HomePage> {
                         shadowColor:
                         MaterialStateProperty.all(Colors.transparent),
                       ),
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => StokPage())),
+
+                      onPressed: () {
+                        callUsers();
+
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => StokPage()));
+
+
+                      },
                       child: Center(
                         child: Text(
                           'GİRİŞ',
@@ -193,15 +226,15 @@ class _HomePageState extends State<HomePage> {
                     ),
                       ],
                     ),
-                    Container(
+                   Container(
                       margin: EdgeInsets.only(left: 120,top: 10),
                       child: Row(
                         children: [
                           Checkbox(
-                            value: checkboxvalue,
+                            value: isChecked,
                             onChanged: (value) {
-                              setState(() {
-                                checkboxvalue = value!;
+
+                              setState(() {isChecked=value!;
                               });
                             },
 
@@ -230,6 +263,16 @@ class _HomePageState extends State<HomePage> {
   }
 
 
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
+    );
+  }
 }
 
 class StokPage extends StatelessWidget {

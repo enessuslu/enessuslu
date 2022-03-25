@@ -1,41 +1,49 @@
 import 'dart:convert';
 
-Users usersFromJson(String str) => Users.fromJson(json.decode(str));
+List<Users> usersFromJson(String str) => List<Users>.from(json.decode(str).map((x) => Users.fromJson(x)));
 
-String usersToJson(Users data) => json.encode(data.toJson());
+String usersToJson(List<Users> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Users {
   Users({
-    required this.resource,
+    required this.userId,
+    required this.userName,
+    required this.userPassword,
+    required this.userFirstname,
+    required this.userLastname,
+    required this.userRole,
+    required this.aktif,
+    required this.userMail,
   });
 
-  List<Resource> resource;
+  int userId;
+  String userName;
+  String userPassword;
+  String userFirstname;
+  String userLastname;
+  String userRole;
+  bool aktif;
+  String userMail;
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
-    resource: List<Resource>.from(json["resource"].map((x) => Resource.fromJson(x))),
+    userId: json["UserID"],
+    userName: json["USER_NAME"],
+    userPassword: json["USER_PASSWORD"],
+    userFirstname: json["USER_FIRSTNAME"],
+    userLastname: json["USER_LASTNAME"],
+    userRole: json["USER_ROLE"],
+    aktif: json["AKTIF"],
+    userMail: json["USER_MAIL"],
   );
 
   Map<String, dynamic> toJson() => {
-    "resource": List<dynamic>.from(resource.map((x) => x.toJson())),
-  };
-}
-
-class Resource {
-  Resource({
-    required this.name,
-    required this.password,
-  });
-
-  String name;
-  String password;
-
-  factory Resource.fromJson(Map<String, dynamic> json) => Resource(
-    name: json["Name"],
-    password: json["Password"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "Name": name,
-    "Password": password,
+    "UserID": userId,
+    "USER_NAME": userName,
+    "USER_PASSWORD": userPassword,
+    "USER_FIRSTNAME": userFirstname,
+    "USER_LASTNAME": userLastname,
+    "USER_ROLE": userRole,
+    "AKTIF": aktif,
+    "USER_MAIL": userMail,
   };
 }
