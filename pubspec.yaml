@@ -37,6 +37,7 @@ dependencies:
   dart_mssql: ^1.0.1
   http: ^0.13.3
   shared_preferences:
+  fluttertoast: ^8.0.9
 dev_dependencies:
 
   flutter_test:

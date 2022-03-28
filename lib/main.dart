@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testflutter/model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   bool isChecked = false;
 
   ValueChanged<bool?>? onChanged;
-  final url = Uri.parse("http://172.28.64.1:80/user");
+  final url = Uri.parse("http://172.28.64.1:1433/api/user");
   List<String> usernames = [];
   List<String> passwords = [];
   TextEditingController userNameController = new TextEditingController();
@@ -58,6 +59,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     enter();
+    callUsers();
     return MaterialApp(
         theme: ThemeData(fontFamily: 'Roboto'),
         home: Scaffold(
@@ -198,23 +200,32 @@ class _HomePageState extends State<HomePage> {
                                   MaterialStateProperty.all(Colors.transparent),
                             ),
                             onPressed: () {
-                              callUsers();
-                              if (userNameController.text.toString() ==
-                                      "ergun" &&
-                                  userPasswordController.text.toString() ==
-                                      "12345") {
+
+                              if ( usernames.contains(userNameController.text.toString()) &&
+                                  passwords.contains(userPasswordController.text.toString())) {
                                 if (isChecked == true) {
                                   remember();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => StokPage()));
-                                } else {
+                                } else if(isChecked ==false || isChecked == null){
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => StokPage()));
                                 }
+                              }
+                              else{
+                                Fluttertoast.showToast(
+                                    msg: "Kullanıcı adı veya şifre hatalı",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
                               }
                             },
                             child: Center(
