@@ -38,8 +38,12 @@ dependencies:
   http: ^0.13.3
   shared_preferences:
   fluttertoast: ^8.0.9
+  enum_extendable_annotation:
+  basic_utils:
+  json_table:
 dev_dependencies:
-
+build_runner:
+  enum_extendable_generator:
   flutter_test:
     sdk: flutter
 

@@ -4,6 +4,7 @@
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
+import 'package:enum_extendable_annotation/enum_extendable_annotation.dart';
 
 List<Stok> stokFromJson(String str) => List<Stok>.from(json.decode(str).map((x) => Stok.fromJson(x)));
 
@@ -36,54 +37,54 @@ class Stok {
     required this.fabStokAd,
   });
 
-  String stokKodu;
-  String stokAdi;
-  String grupKodu;
-  String grupIsim;
-  dynamic kod1;
-  double olcuBirimi;
-  double bakiye;
-  double adBakiye;
-  double topCevrim;
-  double cevrim;
-  double bekleyenSiparis;
-  int bekSipAdet;
-  double satisaHazir;
-  double satHzrAdet;
-  String toptanFiyat;
-  String parakendeFiyat;
-  double sonFiat;
-  dynamic toptanIsk;
-  dynamic perakendeIsk;
-  int beklIeMiktar;
-  int beklIeAd;
-  double fabStokMik;
-  double fabStokAd;
+  final String stokKodu;
+  final String stokAdi;
+  final String grupKodu;
+  final String grupIsim;
+  final String kod1;
+  final String olcuBirimi;
+  final String bakiye;
+  final String adBakiye;
+  final String topCevrim;
+  final String cevrim;
+  final String bekleyenSiparis;
+  final String bekSipAdet;
+  final String satisaHazir;
+  final String satHzrAdet;
+  final String toptanFiyat;
+  final String parakendeFiyat;
+  final String sonFiat;
+  final String toptanIsk;
+  final String perakendeIsk;
+  final String beklIeMiktar;
+  final String beklIeAd;
+  final String fabStokMik;
+  final String fabStokAd;
 
   factory Stok.fromJson(Map<String, dynamic> json) => Stok(
-    stokKodu: json["STOK_KODU"],
-    stokAdi: json["STOK_ADI"],
-    grupKodu: json["GRUP_KODU"] == null ? null : json["GRUP_KODU"],
-    grupIsim: json["GRUP_ISIM"] == null ? null : json["GRUP_ISIM"],
-    kod1: json["KOD_1"],
-    olcuBirimi:json["OLCU_BIRIMI"],
-    bakiye: json["BAKIYE"].toDouble(),
-    adBakiye: json["AD_BAKIYE"] == null ? null : json["AD_BAKIYE"].toDouble(),
-    topCevrim: json["TOP_CEVRIM"].toDouble(),
-    cevrim: json["CEVRIM"].toDouble(),
-    bekleyenSiparis: json["BEKLEYEN_SIPARIS"].toDouble(),
-    bekSipAdet: json["BEK_SIP_ADET"],
-    satisaHazir: json["SATISA_HAZIR"].toDouble(),
-    satHzrAdet: json["SAT_HZR_ADET"] == null ? null : json["SAT_HZR_ADET"].toDouble(),
-    toptanFiyat: json["TOPTAN_FIYAT"],
-    parakendeFiyat: json["PARAKENDE_FIYAT"],
-    sonFiat: json["SON_FIAT"] == null ? null : json["SON_FIAT"].toDouble(),
-    toptanIsk: json["TOPTAN_ISK"],
-    perakendeIsk: json["PERAKENDE_ISK"],
-    beklIeMiktar: json["BEKL_IE_MIKTAR"],
-    beklIeAd: json["BEKL_IE_AD"],
-    fabStokMik: json["FAB_STOK_MIK"].toDouble(),
-    fabStokAd: json["FAB_STOK_AD"].toDouble(),
+    stokKodu: json["STOK_KODU"].toString(),
+    stokAdi: json["STOK_ADI"].toString() ,
+    grupKodu: json["GRUP_KODU"].toString() ,
+    grupIsim: json["GRUP_ISIM"].toString() ,
+    kod1: json["KOD_1"].toString(),
+    olcuBirimi: json["OLCU_BIRIMI"].toString(),
+    bakiye: json["BAKIYE"].toString(),
+    adBakiye: json["AD_BAKIYE"].toString() ,
+    topCevrim: json["TOP_CEVRIM"].toString(),
+    cevrim: json["CEVRIM"].toString(),
+    bekleyenSiparis: json["BEKLEYEN_SIPARIS"].toString(),
+    bekSipAdet: json["BEK_SIP_ADET"].toString(),
+    satisaHazir: json["SATISA_HAZIR"].toString(),
+    satHzrAdet: json["SAT_HZR_ADET"].toString() ,
+    toptanFiyat: json["TOPTAN_FIYAT"].toString(),
+    parakendeFiyat: json["PARAKENDE_FIYAT"].toString(),
+    sonFiat: json["SON_FIAT"].toString() ,
+    toptanIsk: json["TOPTAN_ISK"].toString(),
+    perakendeIsk: json["PERAKENDE_ISK"].toString(),
+    beklIeMiktar: json["BEKL_IE_MIKTAR"].toString(),
+    beklIeAd: json["BEKL_IE_AD"].toString(),
+    fabStokMik: json["FAB_STOK_MIK"].toString(),
+    fabStokAd: json["FAB_STOK_AD"].toString(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -92,7 +93,7 @@ class Stok {
     "GRUP_KODU": grupKodu == null ? null : grupKodu,
     "GRUP_ISIM": grupIsim == null ? null : grupIsim,
     "KOD_1": kod1,
-    "OLCU_BIRIMI":olcuBirimi == null ? null : olcuBirimi,
+    "OLCU_BIRIMI":olcuBirimi,
     "BAKIYE": bakiye,
     "AD_BAKIYE": adBakiye == null ? null : adBakiye,
     "TOP_CEVRIM": topCevrim,
@@ -112,5 +113,10 @@ class Stok {
     "FAB_STOK_AD": fabStokAd,
   };
 }
+
+
+
+
+
 
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,8 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testflutter/model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:testflutter/stokmodel.dart';
+import 'package:json_table/json_table.dart';
 
 void main() {
+
   runApp(MaterialApp(
     //runApp method
     home: HomePage(),
@@ -23,10 +28,13 @@ class _HomePageState extends State<HomePage> {
 
   ValueChanged<bool?>? onChanged;
   final url = Uri.parse("http://172.28.64.1:1433/api/user");
+
   List<String> usernames = [];
   List<String> passwords = [];
+
   TextEditingController userNameController = new TextEditingController();
   TextEditingController userPasswordController = new TextEditingController();
+
   Future callUsers() async {
     try {
       final response = await http.get(url);
@@ -60,6 +68,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     enter();
     callUsers();
+
     return MaterialApp(
         theme: ThemeData(fontFamily: 'Roboto'),
         home: Scaffold(
@@ -291,10 +300,52 @@ class UpperCaseTextFormatter extends TextInputFormatter {
     );
   }
 }
+final List<String> stoknames1=[];
 
 class StokPage extends StatelessWidget {
   Widget build(BuildContext context) {
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final List<String> stoknames=[];
+ final stokurl = Uri.parse("http://172.28.64.1:1433/api/stok");
+    Future callStokes() async {
+      try {
+        var response = await http.get(stokurl);
+        if (response.statusCode == 200) {
+          var result = stokFromJson(response.body);
+          for (var i = 0; i < result.length; i++) {
+
+            stoknames.add(result[i].stokAdi.toString());
+            stoknames.add(result[i].satisaHazir.toString());
+            stoknames.add(result[i].satHzrAdet.toString());
+            stoknames.add(result[i].bekleyenSiparis.toString());
+            stoknames.add(result[i].bekSipAdet.toString());
+            stoknames.add(result[i].bakiye.toString());
+            stoknames.add(result[i].adBakiye.toString());
+            stoknames.add(result[i].fabStokMik.toString());
+            stoknames.add(result[i].fabStokAd.toString());
+            stoknames.add(result[i].beklIeMiktar.toString());
+            stoknames.add(result[i].beklIeMiktar.toString());
+
+          }
+
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+      stoknames1.addAll(stoknames);
+    }
+    callStokes();
+    print(stoknames1);
     return MaterialApp(
+
         theme: ThemeData(fontFamily: 'Roboto'),
         home: Scaffold(
           body: SafeArea(
@@ -3904,7 +3955,7 @@ class StokPage extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
-                        hintText: 'Enter a search term',
+                        hintText: 'Ürünler içinde arama yap',
                       ),
                     ),
                   ),
@@ -3917,6 +3968,34 @@ class StokPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  Expanded(
+                    child: Container(
+
+                      height: 300,
+                      margin: EdgeInsets.only(left: 0, top: 0),
+                      padding: EdgeInsets.only(top: 10),
+                      child: ListView.builder(
+                          itemCount: stoknames1.length,
+                          itemBuilder: (BuildContext context,int index){
+                            return ExpansionTile(
+                                title:Text(stoknames1[index].toString()),
+                                  children: [
+                                    Text("Satışa hazır M1:"),
+                                    Text("Satışa hazır M2:"),
+                                    Text("Bekleyen Sipariş M1:"),
+                                    Text("Bekleyen Sipariş M2:"),
+                                    Text("Bakiye M1:"),
+                                    Text("Bakiye M2:"),
+                                    Text("Fabrika Stok M1:"),
+                                    Text("Fabrika Stok M2:"),
+                                    Text("Bekleyen iş emri M1:"),
+                                    Text("Bekleyen is emri M2:"),],
+                            );
+                          }
+                      ),
+                    ),
+                  ),
+
                 ],
               ),
             ),
@@ -3924,3 +4003,16 @@ class StokPage extends StatelessWidget {
         ));
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
