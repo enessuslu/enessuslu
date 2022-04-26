@@ -2,9 +2,9 @@
 //
 //     final stok = stokFromJson(jsonString);
 
-import 'package:meta/meta.dart';
+
 import 'dart:convert';
-import 'package:enum_extendable_annotation/enum_extendable_annotation.dart';
+
 
 List<Stok> stokFromJson(String str) => List<Stok>.from(json.decode(str).map((x) => Stok.fromJson(x)));
 
@@ -86,6 +86,7 @@ class Stok {
     fabStokMik: json["FAB_STOK_MIK"].toString(),
     fabStokAd: json["FAB_STOK_AD"].toString(),
   );
+
 
   Map<String, dynamic> toJson() => {
     "STOK_KODU": stokKodu,

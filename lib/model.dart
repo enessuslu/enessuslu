@@ -26,24 +26,24 @@ class Users {
   String userMail;
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
-    userId: json["UserID"],
+    userId: json["USER_ID"],
     userName: json["USER_NAME"],
     userPassword: json["USER_PASSWORD"],
     userFirstname: json["USER_FIRSTNAME"],
     userLastname: json["USER_LASTNAME"],
     userRole: json["USER_ROLE"],
-    aktif: json["AKTIF"],
+    aktif: json["ACTIVE"],
     userMail: json["USER_MAIL"],
   );
 
   Map<String, dynamic> toJson() => {
-    "UserID": userId,
+    "USER_ID": userId,
     "USER_NAME": userName,
     "USER_PASSWORD": userPassword,
     "USER_FIRSTNAME": userFirstname,
     "USER_LASTNAME": userLastname,
     "USER_ROLE": userRole,
-    "AKTIF": aktif,
+    "ACTIVE": aktif,
     "USER_MAIL": userMail,
   };
 }
